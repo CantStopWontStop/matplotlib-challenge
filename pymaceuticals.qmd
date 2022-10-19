@@ -1,0 +1,294 @@
+---
+title: "pymaceuticals"
+format: 
+    html:
+        code-fold: true
+        code-tools: true
+        theme: superhero
+        toc: true
+editor: visual
+
+execute: 
+  warning: false
+  echo: false
+---
+
+```{r}
+
+library(reticulate)
+```
+
+```{python}
+
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import sem
+import scipy.stats as st
+from scipy.stats import linregress
+from IPython.display import Markdown
+from tabulate import tabulate
+
+# Read in data
+mouse_data    = pd.read_csv("data/Mouse_metadata.csv")
+study_results = pd.read_csv("data/Study_results.csv")
+
+
+
+```
+
+```{python}
+# Combine mouse and trial results
+mouse_results = pd.merge(mouse_data, study_results, on = "Mouse ID")
+# Two ways to get number of unique mice 
+len(mouse_data)
+n_unique_mice = len(mouse_results["Mouse ID"].value_counts())
+
+# Get unique observations; each mouse at each timepoint
+mouse_results["Mouse Time"] = mouse_results["Mouse ID"] + mouse_results["Timepoint"].map(str)
+
+# Remove duplicate rows
+mouse_results = mouse_results[~mouse_results["Mouse Time"].duplicated()]
+```
+
+# Generate Summary Statistics
+
+```{python}
+
+regimen_group = mouse_results.groupby('Drug Regimen')
+
+# Create column for each of the following statistics: mean, median, variance, standard deviation, and SEM of the tumor volume.
+tumor_mean = regimen_group['Tumor Volume (mm3)'].mean()
+tumor_median = regimen_group['Tumor Volume (mm3)'].median()
+tumor_var = regimen_group['Tumor Volume (mm3)'].var()
+tumor_std = regimen_group['Tumor Volume (mm3)'].std()
+tumor_sem = regimen_group['Tumor Volume (mm3)'].sem()
+tumor_tmpts = regimen_group['Timepoint'].count()
+
+# Create dataframe with new columns
+tumor_by_reg_sum = pd.DataFrame({"Mean": tumor_mean,
+                                "Median": tumor_median, 
+                                "Variance": tumor_var, 
+                                "Standard Deviation":tumor_std,
+                                "Standard Error":tumor_sem,
+                                "Number of Timepoints":tumor_tmpts})
+
+Markdown(tabulate(
+  tumor_by_reg_sum,
+  headers = list(tumor_by_reg_sum.columns.values)))
+```
+
+# Create Bar Charts and Pie Charts
+
+## Bar Charts
+
+```{python}
+
+x_axis = np.arange(len(tumor_by_reg_sum.index))
+
+
+plt.bar(x_axis,
+        tumor_by_reg_sum['Number of Timepoints'],
+        color ="#0f2537" ,
+        align = "center")
+        
+tick_locations = [value for value in x_axis]
+plt.xticks(tick_locations,
+           tumor_by_reg_sum.index,
+           rotation = 45)
+
+plt.title("Number of Timepoints by Drug Regimen")
+plt.xlabel("Drug Regimen")
+plt.ylabel("Number of Timepoints")
+
+plt.show()
+```
+
+```{python}
+
+tumor_by_reg_sum = tumor_by_reg_sum.sort_values(by='Number of Timepoints', ascending = False)
+
+fig, ax = plt.subplots()
+y_axis = tumor_by_reg_sum.index
+x_axis = tumor_by_reg_sum['Number of Timepoints']
+
+y_range = np.arange(len(y_axis))
+ax.barh(y_range,x_axis,color ="#0f2537",  align='center')
+
+ax.set_yticks(y_range, labels=y_axis)
+ax.invert_yaxis()  # labels read top-to-bottom
+ax.set_xlabel('Number of Timepoints')
+ax.set_ylabel('Drug Regimen')
+ax.set_title('Number of Timepoints by Drug Regimen')
+
+plt.show()
+```
+
+## Pie Charts
+
+```{python}
+
+gender_sum = [mouse_data.loc[mouse_data.Sex=='Female',"Mouse ID"].count(),
+mouse_data.loc[mouse_data.Sex=='Male',"Mouse ID"].count()]
+sexes = ["Female", "Male"]
+
+#pie = plt.figure(1)
+
+plt.pie(gender_sum, labels = sexes,autopct="%1.1f%%")
+plt.show() 
+```
+
+# Calculate Quartiles, Find Outliers, and Create a Box Plot
+
+## Calculate Quartiles
+
+```{python}
+# Rename column to remove space
+mouse_results.rename(columns = {'Drug Regimen':'Drug'}, inplace = True)
+
+# Filter data frame to four of the most promising treatment regimens: Capomulin, Ramicane, Infubinol, and Ceftamin. Then, calculate the quartiles and IQR, and determine if there are any potential outliers across all four treatment regimens. Use the following substeps:
+best_drug_ls = ['Capomulin', 'Ramicane', 'Infubinol', 'Ceftamin']
+best_drug_df = mouse_results[(mouse_results['Drug'].isin(best_drug_ls))]
+
+# Create a grouped DataFrame that shows the last (greatest) time point for each mouse.
+mouse_by_drug = best_drug_df.groupby(['Mouse ID', 'Drug'])
+
+# calculate the quartiles and IQR, and determine if there are any potential outliers across all four treatment regimens.
+mbr_max_tmpts = mouse_by_drug.max('Timepoint')
+mbr_max_tmpts.reset_index(inplace = True)
+
+top_drug_groups = mbr_max_tmpts.groupby('Drug')
+
+Q1 = top_drug_groups['Tumor Volume (mm3)'].quantile(0.25)
+Q2 = top_drug_groups['Tumor Volume (mm3)'].median()
+Q3 = top_drug_groups['Tumor Volume (mm3)'].quantile(0.75)
+iqr = Q3 - Q1
+lower_bound = Q1 - (1.5*iqr)
+upper_bound = Q3 + (1.5*iqr)
+
+
+tvol_by_drug = pd.DataFrame({"Q1": Q1,
+                             "Q2": Q2,
+                             "Q3": Q3,
+                            "iqr" : iqr,
+                             'lower_bound' : lower_bound,
+                             'upper_bound' : upper_bound})
+
+Markdown(tabulate(
+  tvol_by_drug,
+  headers = list(tvol_by_drug.columns.values)))
+
+```
+
+## Find Outliers
+
+### Outliers for Tumor Size
+
+```{python}
+
+counter = 0
+for i in range(len(tvol_by_drug)):
+    for row, col in mbr_max_tmpts.iterrows():
+        if col['Drug'] == tvol_by_drug.index[counter] and (col['Tumor Volume (mm3)'] < tvol_by_drug.iloc[counter][4] or col['Tumor Volume (mm3)'] > tvol_by_drug.iloc[counter][5]):
+            print(row,col[0], col[1], col['Timepoint'], col['Tumor Volume (mm3)'], tvol_by_drug.iloc[counter][4],tvol_by_drug.iloc[counter][5], counter)
+    counter += 1
+    
+```
+
+### Boxplot for Tumor Size
+
+```{python}
+
+Capomulin = mbr_max_tmpts.loc[mbr_max_tmpts['Drug'] == "Capomulin"]
+Ceftamin = mbr_max_tmpts.loc[mbr_max_tmpts['Drug'] == "Ceftamin"]
+Infubinol = mbr_max_tmpts.loc[mbr_max_tmpts['Drug'] == "Infubinol"]
+Ramicane = mbr_max_tmpts.loc[mbr_max_tmpts['Drug'] == "Ramicane"]
+
+Capomulin_tvols = Capomulin['Tumor Volume (mm3)']
+Ceftamin_tvols = Ceftamin['Tumor Volume (mm3)']
+Infubinol_tvols = Infubinol['Tumor Volume (mm3)']
+Ramicane_tvols = Ramicane['Tumor Volume (mm3)']
+
+columns = [Capomulin_tvols, Ceftamin_tvols, Infubinol_tvols, Ramicane_tvols]
+
+
+fig1, ax1 = plt.subplots()
+ax1.set_title('Tumor Volume at Lastest Timepoint by Top Four Drug Regimens')
+ax1.set_ylabel('Tumor Volume (mm3)')
+ax1.boxplot(columns)
+plt.xticks([1, 2, 3, 4], ["Capomulin", "Ceftamin", "Infubinol", "Ramicane"])
+
+plt.show()
+```
+
+No outliers detected.
+
+# Create a Line Plot and a Scatter Plot
+
+## Line Plot
+
+```{python}
+
+capomulin_results = mouse_results.loc[mouse_results['Drug'] == "Capomulin"]
+mouse = pd.unique(capomulin_results['Mouse ID'])[0]
+mouse_data = mouse_results.loc[mouse_results['Mouse ID'] == mouse]
+
+
+x_axis_data = np.arange(len(mouse_data))
+y_axis_data = mouse_data['Tumor Volume (mm3)']
+plt.plot(x_axis_data, y_axis_data, color ="#0f2537")
+
+tick_locations = [value for value in x_axis_data]
+plt.xticks(tick_locations,
+           mouse_data['Timepoint'],
+           rotation = 45)
+
+plt.title(f'Tumor Volume by Timepont for Mouse #{mouse}')
+plt.xlabel("Timepoint (Days)")
+plt.ylabel("Tumor Volume (mm3)")
+
+plt.show()
+```
+
+## Scatter Plot
+
+```{python}
+
+weight = mbr_max_tmpts['Weight (g)']
+
+
+volume = mbr_max_tmpts['Tumor Volume (mm3)']
+
+plt.scatter(weight, volume, marker="o" ,facecolors ="#0f2537" , edgecolors="orange")
+
+plt.title('Tumor Volume by Weight for Capomulin Regimen')
+plt.xlabel("Weight")
+plt.ylabel("Tumor Volume (mm3)")
+
+plt.show()
+```
+
+# Calculate Correlation and Regression
+
+## Correlation
+
+```{python}
+correlation = st.pearsonr(weight,volume)
+print(f"The correlation between both factors is {round(correlation[0],2)}")
+```
+
+## Regression
+
+```{python}
+(slope, intercept, rvalue, pvalue, stderr) = linregress(weight, volume)
+regress_values = weight * slope + intercept
+line_eq = "y = " + str(round(slope,2)) + "x + " + str(round(intercept,2))
+plt.scatter(weight,volume,marker="o",facecolors ="#0f2537" ,edgecolors="orange")
+plt.plot(weight,regress_values,"r-")
+plt.annotate(line_eq,(5.8,0.8),fontsize=15,color="red")
+plt.title('Tumor Volume by Weight for Capomulin Regimen')
+plt.xlabel("Weight")
+plt.ylabel("Tumor Volume (mm3)")
+plt.show()
+```

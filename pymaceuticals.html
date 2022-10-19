@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>pymaceuticals</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="pymaceuticals_files/libs/clipboard/clipboard.min.js"></script>
+<script src="pymaceuticals_files/libs/quarto-html/quarto.js"></script>
+<script src="pymaceuticals_files/libs/quarto-html/popper.min.js"></script>
+<script src="pymaceuticals_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="pymaceuticals_files/libs/quarto-html/anchor.min.js"></script>
+<link href="pymaceuticals_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="pymaceuticals_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="pymaceuticals_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="pymaceuticals_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="pymaceuticals_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#generate-summary-statistics" id="toc-generate-summary-statistics" class="nav-link active" data-scroll-target="#generate-summary-statistics">Generate Summary Statistics</a></li>
+  <li><a href="#create-bar-charts-and-pie-charts" id="toc-create-bar-charts-and-pie-charts" class="nav-link" data-scroll-target="#create-bar-charts-and-pie-charts">Create Bar Charts and Pie Charts</a>
+  <ul class="collapse">
+  <li><a href="#bar-charts" id="toc-bar-charts" class="nav-link" data-scroll-target="#bar-charts">Bar Charts</a></li>
+  <li><a href="#pie-charts" id="toc-pie-charts" class="nav-link" data-scroll-target="#pie-charts">Pie Charts</a></li>
+  </ul></li>
+  <li><a href="#calculate-quartiles-find-outliers-and-create-a-box-plot" id="toc-calculate-quartiles-find-outliers-and-create-a-box-plot" class="nav-link" data-scroll-target="#calculate-quartiles-find-outliers-and-create-a-box-plot">Calculate Quartiles, Find Outliers, and Create a Box Plot</a>
+  <ul class="collapse">
+  <li><a href="#calculate-quartiles" id="toc-calculate-quartiles" class="nav-link" data-scroll-target="#calculate-quartiles">Calculate Quartiles</a></li>
+  <li><a href="#find-outliers" id="toc-find-outliers" class="nav-link" data-scroll-target="#find-outliers">Find Outliers</a>
+  <ul class="collapse">
+  <li><a href="#outliers-for-tumor-size" id="toc-outliers-for-tumor-size" class="nav-link" data-scroll-target="#outliers-for-tumor-size">Outliers for Tumor Size</a></li>
+  <li><a href="#boxplot-for-tumor-size" id="toc-boxplot-for-tumor-size" class="nav-link" data-scroll-target="#boxplot-for-tumor-size">Boxplot for Tumor Size</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#create-a-line-plot-and-a-scatter-plot" id="toc-create-a-line-plot-and-a-scatter-plot" class="nav-link" data-scroll-target="#create-a-line-plot-and-a-scatter-plot">Create a Line Plot and a Scatter Plot</a>
+  <ul class="collapse">
+  <li><a href="#line-plot" id="toc-line-plot" class="nav-link" data-scroll-target="#line-plot">Line Plot</a></li>
+  <li><a href="#scatter-plot" id="toc-scatter-plot" class="nav-link" data-scroll-target="#scatter-plot">Scatter Plot</a></li>
+  </ul></li>
+  <li><a href="#calculate-correlation-and-regression" id="toc-calculate-correlation-and-regression" class="nav-link" data-scroll-target="#calculate-correlation-and-regression">Calculate Correlation and Regression</a>
+  <ul class="collapse">
+  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation">Correlation</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression">Regression</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">pymaceuticals</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>249</code></pre>
+</div>
+</div>
+<section id="generate-summary-statistics" class="level1">
+<h1>Generate Summary Statistics</h1>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th>Mean Med</th>
+<th>ian Va</th>
+<th style="text-align: left;">riance</th>
+<th>Standard Dev</th>
+<th>iation Standard Err</th>
+<th>or Number of Ti</th>
+<th style="text-align: left;">mepoints</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Capomulin</td>
+<td>40.6757</td>
+<td style="text-align: left;">41.5578</td>
+<td>24.9478</td>
+<td>4.99477</td>
+<td>0.329346</td>
+<td style="text-align: left;">230</td>
+</tr>
+<tr class="even">
+<td>Ceftamin</td>
+<td>52.5912</td>
+<td style="text-align: left;">51.7762</td>
+<td>39.2902</td>
+<td>6.26819</td>
+<td>0.469821</td>
+<td style="text-align: left;">178</td>
+</tr>
+<tr class="odd">
+<td>Infubinol</td>
+<td>52.8848</td>
+<td style="text-align: left;">51.8206</td>
+<td>43.1287</td>
+<td>6.56724</td>
+<td>0.492236</td>
+<td style="text-align: left;">178</td>
+</tr>
+<tr class="even">
+<td>Ketapril</td>
+<td>55.2356</td>
+<td style="text-align: left;">53.6987</td>
+<td>68.5536</td>
+<td>8.27971</td>
+<td>0.60386</td>
+<td style="text-align: left;">188</td>
+</tr>
+<tr class="odd">
+<td>Naftisol</td>
+<td>54.3316</td>
+<td style="text-align: left;">52.5093</td>
+<td>66.1735</td>
+<td>8.13471</td>
+<td>0.596466</td>
+<td style="text-align: left;">186</td>
+</tr>
+<tr class="even">
+<td>Placebo</td>
+<td>54.0336</td>
+<td style="text-align: left;">52.2889</td>
+<td>61.1681</td>
+<td>7.821</td>
+<td>0.581331</td>
+<td style="text-align: left;">181</td>
+</tr>
+<tr class="odd">
+<td>Propriva</td>
+<td>52.3935</td>
+<td style="text-align: left;">50.91</td>
+<td>43.1388</td>
+<td>6.56801</td>
+<td>0.525862</td>
+<td style="text-align: left;">156</td>
+</tr>
+<tr class="even">
+<td>Ramicane</td>
+<td>40.2167</td>
+<td style="text-align: left;">40.6732</td>
+<td>23.4867</td>
+<td>4.84631</td>
+<td>0.320955</td>
+<td style="text-align: left;">228</td>
+</tr>
+<tr class="odd">
+<td>Stelasyn</td>
+<td>54.2331</td>
+<td style="text-align: left;">52.4317</td>
+<td>59.4506</td>
+<td>7.71042</td>
+<td>0.573111</td>
+<td style="text-align: left;">181</td>
+</tr>
+<tr class="even">
+<td>Zoniferol</td>
+<td>53.2365</td>
+<td style="text-align: left;">51.8185</td>
+<td>48.5334</td>
+<td>6.96659</td>
+<td>0.516398</td>
+<td style="text-align: left;">182</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="create-bar-charts-and-pie-charts" class="level1">
+<h1>Create Bar Charts and Pie Charts</h1>
+<section id="bar-charts" class="level2">
+<h2 class="anchored" data-anchor-id="bar-charts">Bar Charts</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;BarContainer object of 10 artists&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>([&lt;matplotlib.axis.XTick object at 0x00000255DC4C4FD0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DC4C4FA0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DC4C4640&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE61DE20&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE6355E0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE635B80&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE63C040&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE63C670&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE63CDC0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE643550&gt;], [Text(0, 0, 'Capomulin'), Text(1, 0, 'Ceftamin'), Text(2, 0, 'Infubinol'), Text(3, 0, 'Ketapril'), Text(4, 0, 'Naftisol'), Text(5, 0, 'Placebo'), Text(6, 0, 'Propriva'), Text(7, 0, 'Ramicane'), Text(8, 0, 'Stelasyn'), Text(9, 0, 'Zoniferol')])</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="pymaceuticals_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;BarContainer object of 10 artists&gt;</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="pymaceuticals_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="pie-charts" class="level2">
+<h2 class="anchored" data-anchor-id="pie-charts">Pie Charts</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>([&lt;matplotlib.patches.Wedge object at 0x00000255DE7F5490&gt;, &lt;matplotlib.patches.Wedge object at 0x00000255DE7F5BB0&gt;], [Text(0.006939175976765795, 1.0999781124353174, 'Female'), Text(-0.006939175976765929, -1.0999781124353174, 'Male')], [Text(0.0037850050782358875, 0.5999880613283548, '49.8%'), Text(-0.003785005078235961, -0.5999880613283548, '50.2%')])</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="pymaceuticals_files/figure-html/unnamed-chunk-7-5.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="calculate-quartiles-find-outliers-and-create-a-box-plot" class="level1">
+<h1>Calculate Quartiles, Find Outliers, and Create a Box Plot</h1>
+<section id="calculate-quartiles" class="level2">
+<h2 class="anchored" data-anchor-id="calculate-quartiles">Calculate Quartiles</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th>Q1 Q2</th>
+<th style="text-align: right;">Q3</th>
+<th style="text-align: right;">iq</th>
+<th>r lowe</th>
+<th style="text-align: left;">r_bound</th>
+<th style="text-align: center;">upper_bound</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Capomulin</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">45.8937</td>
+<td>46.749</td>
+<td style="text-align: left;">1.74901</td>
+<td style="text-align: center;">42.3765</td>
+<td>49.3725</td>
+</tr>
+<tr class="even">
+<td>Ceftamin</td>
+<td style="text-align: right;">48.7221</td>
+<td style="text-align: right;">59.852</td>
+<td>64.2998</td>
+<td style="text-align: left;">15.5778</td>
+<td style="text-align: center;">25.3554</td>
+<td>87.6665</td>
+</tr>
+<tr class="odd">
+<td>Infubinol</td>
+<td style="text-align: right;">54.0486</td>
+<td style="text-align: right;">60.1652</td>
+<td>65.5257</td>
+<td style="text-align: left;">11.4771</td>
+<td style="text-align: center;">36.8329</td>
+<td>82.7414</td>
+</tr>
+<tr class="even">
+<td>Ramicane</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">45.5219</td>
+<td>46.3438</td>
+<td style="text-align: left;">1.34383</td>
+<td style="text-align: center;">42.9843</td>
+<td>48.3596</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="find-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="find-outliers">Find Outliers</h2>
+<section id="outliers-for-tumor-size" class="level3">
+<h3 class="anchored" data-anchor-id="outliers-for-tumor-size">Outliers for Tumor Size</h3>
+<div class="cell">
+
+</div>
+</section>
+<section id="boxplot-for-tumor-size" class="level3">
+<h3 class="anchored" data-anchor-id="boxplot-for-tumor-size">Boxplot for Tumor Size</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>{'whiskers': [&lt;matplotlib.lines.Line2D object at 0x00000255DE99D250&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE99D520&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE99F550&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE99F820&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9B7940&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9B7C10&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9C6D30&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9D3040&gt;], 'caps': [&lt;matplotlib.lines.Line2D object at 0x00000255DE99D790&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE99D9A0&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE99FAF0&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE99FDC0&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9B7EE0&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9C61F0&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9D3310&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9D35E0&gt;], 'boxes': [&lt;matplotlib.lines.Line2D object at 0x00000255DE800F40&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE99F280&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9B7670&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9C6A60&gt;], 'medians': [&lt;matplotlib.lines.Line2D object at 0x00000255DE99DC70&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9B70D0&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9C64C0&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9D38B0&gt;], 'fliers': [&lt;matplotlib.lines.Line2D object at 0x00000255DE99DF40&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9B73A0&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9C6790&gt;, &lt;matplotlib.lines.Line2D object at 0x00000255DE9D3B80&gt;], 'means': []}</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>([&lt;matplotlib.axis.XTick object at 0x00000255DE63D370&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE63D3A0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE9D3FA0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE9DD1F0&gt;], [Text(1, 0, 'Capomulin'), Text(2, 0, 'Ceftamin'), Text(3, 0, 'Infubinol'), Text(4, 0, 'Ramicane')])</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="pymaceuticals_files/figure-html/unnamed-chunk-10-7.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>No outliers detected.</p>
+</section>
+</section>
+</section>
+<section id="create-a-line-plot-and-a-scatter-plot" class="level1">
+<h1>Create a Line Plot and a Scatter Plot</h1>
+<section id="line-plot" class="level2">
+<h2 class="anchored" data-anchor-id="line-plot">Line Plot</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>([&lt;matplotlib.axis.XTick object at 0x00000255DE821DF0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE821E50&gt;, &lt;matplotlib.axis.XTick object at 0x00000255D7523550&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE9E6CD0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE9D3CD0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE9D3640&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DEA114F0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DEA11FD0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DE9EE8B0&gt;, &lt;matplotlib.axis.XTick object at 0x00000255DEFD0370&gt;], [Text(0, 0, '0'), Text(1, 0, '5'), Text(2, 0, '10'), Text(3, 0, '15'), Text(4, 0, '20'), Text(5, 0, '25'), Text(6, 0, '30'), Text(7, 0, '35'), Text(8, 0, '40'), Text(9, 0, '45')])</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="pymaceuticals_files/figure-html/unnamed-chunk-11-9.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="scatter-plot" class="level2">
+<h2 class="anchored" data-anchor-id="scatter-plot">Scatter Plot</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="pymaceuticals_files/figure-html/unnamed-chunk-12-11.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="calculate-correlation-and-regression" class="level1">
+<h1>Calculate Correlation and Regression</h1>
+<section id="correlation" class="level2">
+<h2 class="anchored" data-anchor-id="correlation">Correlation</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>The correlation between both factors is 0.6</code></pre>
+</div>
+</div>
+</section>
+<section id="regression" class="level2">
+<h2 class="anchored" data-anchor-id="regression">Regression</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="pymaceuticals_files/figure-html/unnamed-chunk-14-13.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<!-- -->
+
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "pymaceuticals"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">    html:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">        code-fold: true</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">        code-tools: true</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">        theme: superhero</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">        toc: true</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">  echo: false</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> sem</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> st</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> linregress</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in data</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>mouse_data    <span class="op">=</span> pd.read_csv(<span class="st">"data/Mouse_metadata.csv"</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>study_results <span class="op">=</span> pd.read_csv(<span class="st">"data/Study_results.csv"</span>)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine mouse and trial results</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>mouse_results <span class="op">=</span> pd.merge(mouse_data, study_results, on <span class="op">=</span> <span class="st">"Mouse ID"</span>)</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Two ways to get number of unique mice </span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(mouse_data)</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>n_unique_mice <span class="op">=</span> <span class="bu">len</span>(mouse_results[<span class="st">"Mouse ID"</span>].value_counts())</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Get unique observations; each mouse at each timepoint</span></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>mouse_results[<span class="st">"Mouse Time"</span>] <span class="op">=</span> mouse_results[<span class="st">"Mouse ID"</span>] <span class="op">+</span> mouse_results[<span class="st">"Timepoint"</span>].<span class="bu">map</span>(<span class="bu">str</span>)</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove duplicate rows</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>mouse_results <span class="op">=</span> mouse_results[<span class="op">~</span>mouse_results[<span class="st">"Mouse Time"</span>].duplicated()]</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="fu"># Generate Summary Statistics</span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>regimen_group <span class="op">=</span> mouse_results.groupby(<span class="st">'Drug Regimen'</span>)</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a><span class="co"># Create column for each of the following statistics: mean, median, variance, standard deviation, and SEM of the tumor volume.</span></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>tumor_mean <span class="op">=</span> regimen_group[<span class="st">'Tumor Volume (mm3)'</span>].mean()</span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>tumor_median <span class="op">=</span> regimen_group[<span class="st">'Tumor Volume (mm3)'</span>].median()</span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>tumor_var <span class="op">=</span> regimen_group[<span class="st">'Tumor Volume (mm3)'</span>].var()</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>tumor_std <span class="op">=</span> regimen_group[<span class="st">'Tumor Volume (mm3)'</span>].std()</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>tumor_sem <span class="op">=</span> regimen_group[<span class="st">'Tumor Volume (mm3)'</span>].sem()</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>tumor_tmpts <span class="op">=</span> regimen_group[<span class="st">'Timepoint'</span>].count()</span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dataframe with new columns</span></span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>tumor_by_reg_sum <span class="op">=</span> pd.DataFrame({<span class="st">"Mean"</span>: tumor_mean,</span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Median"</span>: tumor_median, </span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Variance"</span>: tumor_var, </span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Standard Deviation"</span>:tumor_std,</span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Standard Error"</span>:tumor_sem,</span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Number of Timepoints"</span>:tumor_tmpts})</span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>Markdown(tabulate(</span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>  tumor_by_reg_sum,</span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>  headers <span class="op">=</span> <span class="bu">list</span>(tumor_by_reg_sum.columns.values)))</span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a><span class="fu"># Create Bar Charts and Pie Charts</span></span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bar Charts</span></span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>x_axis <span class="op">=</span> np.arange(<span class="bu">len</span>(tumor_by_reg_sum.index))</span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>plt.bar(x_axis,</span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>        tumor_by_reg_sum[<span class="st">'Number of Timepoints'</span>],</span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>        color <span class="op">=</span><span class="st">"#0f2537"</span> ,</span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>        align <span class="op">=</span> <span class="st">"center"</span>)</span>
+<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>tick_locations <span class="op">=</span> [value <span class="cf">for</span> value <span class="kw">in</span> x_axis]</span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>plt.xticks(tick_locations,</span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a>           tumor_by_reg_sum.index,</span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a>           rotation <span class="op">=</span> <span class="dv">45</span>)</span>
+<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Number of Timepoints by Drug Regimen"</span>)</span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Drug Regimen"</span>)</span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Number of Timepoints"</span>)</span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>tumor_by_reg_sum <span class="op">=</span> tumor_by_reg_sum.sort_values(by<span class="op">=</span><span class="st">'Number of Timepoints'</span>, ascending <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>y_axis <span class="op">=</span> tumor_by_reg_sum.index</span>
+<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a>x_axis <span class="op">=</span> tumor_by_reg_sum[<span class="st">'Number of Timepoints'</span>]</span>
+<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>y_range <span class="op">=</span> np.arange(<span class="bu">len</span>(y_axis))</span>
+<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a>ax.barh(y_range,x_axis,color <span class="op">=</span><span class="st">"#0f2537"</span>,  align<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(y_range, labels<span class="op">=</span>y_axis)</span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a>ax.invert_yaxis()  <span class="co"># labels read top-to-bottom</span></span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Number of Timepoints'</span>)</span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Drug Regimen'</span>)</span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Number of Timepoints by Drug Regimen'</span>)</span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pie Charts</span></span>
+<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a>gender_sum <span class="op">=</span> [mouse_data.loc[mouse_data.Sex<span class="op">==</span><span class="st">'Female'</span>,<span class="st">"Mouse ID"</span>].count(),</span>
+<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a>mouse_data.loc[mouse_data.Sex<span class="op">==</span><span class="st">'Male'</span>,<span class="st">"Mouse ID"</span>].count()]</span>
+<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a>sexes <span class="op">=</span> [<span class="st">"Female"</span>, <span class="st">"Male"</span>]</span>
+<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="co">#pie = plt.figure(1)</span></span>
+<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a>plt.pie(gender_sum, labels <span class="op">=</span> sexes,autopct<span class="op">=</span><span class="st">"</span><span class="sc">%1.1f%%</span><span class="st">"</span>)</span>
+<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a>plt.show() </span>
+<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a><span class="fu"># Calculate Quartiles, Find Outliers, and Create a Box Plot</span></span>
+<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculate Quartiles</span></span>
+<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename column to remove space</span></span>
+<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a>mouse_results.rename(columns <span class="op">=</span> {<span class="st">'Drug Regimen'</span>:<span class="st">'Drug'</span>}, inplace <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter data frame to four of the most promising treatment regimens: Capomulin, Ramicane, Infubinol, and Ceftamin. Then, calculate the quartiles and IQR, and determine if there are any potential outliers across all four treatment regimens. Use the following substeps:</span></span>
+<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a>best_drug_ls <span class="op">=</span> [<span class="st">'Capomulin'</span>, <span class="st">'Ramicane'</span>, <span class="st">'Infubinol'</span>, <span class="st">'Ceftamin'</span>]</span>
+<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a>best_drug_df <span class="op">=</span> mouse_results[(mouse_results[<span class="st">'Drug'</span>].isin(best_drug_ls))]</span>
+<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a grouped DataFrame that shows the last (greatest) time point for each mouse.</span></span>
+<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a>mouse_by_drug <span class="op">=</span> best_drug_df.groupby([<span class="st">'Mouse ID'</span>, <span class="st">'Drug'</span>])</span>
+<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the quartiles and IQR, and determine if there are any potential outliers across all four treatment regimens.</span></span>
+<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a>mbr_max_tmpts <span class="op">=</span> mouse_by_drug.<span class="bu">max</span>(<span class="st">'Timepoint'</span>)</span>
+<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a>mbr_max_tmpts.reset_index(inplace <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a>top_drug_groups <span class="op">=</span> mbr_max_tmpts.groupby(<span class="st">'Drug'</span>)</span>
+<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a>Q1 <span class="op">=</span> top_drug_groups[<span class="st">'Tumor Volume (mm3)'</span>].quantile(<span class="fl">0.25</span>)</span>
+<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a>Q2 <span class="op">=</span> top_drug_groups[<span class="st">'Tumor Volume (mm3)'</span>].median()</span>
+<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a>Q3 <span class="op">=</span> top_drug_groups[<span class="st">'Tumor Volume (mm3)'</span>].quantile(<span class="fl">0.75</span>)</span>
+<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a>iqr <span class="op">=</span> Q3 <span class="op">-</span> Q1</span>
+<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a>lower_bound <span class="op">=</span> Q1 <span class="op">-</span> (<span class="fl">1.5</span><span class="op">*</span>iqr)</span>
+<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a>upper_bound <span class="op">=</span> Q3 <span class="op">+</span> (<span class="fl">1.5</span><span class="op">*</span>iqr)</span>
+<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a>tvol_by_drug <span class="op">=</span> pd.DataFrame({<span class="st">"Q1"</span>: Q1,</span>
+<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Q2"</span>: Q2,</span>
+<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Q3"</span>: Q3,</span>
+<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"iqr"</span> : iqr,</span>
+<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'lower_bound'</span> : lower_bound,</span>
+<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'upper_bound'</span> : upper_bound})</span>
+<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a>Markdown(tabulate(</span>
+<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a>  tvol_by_drug,</span>
+<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>  headers <span class="op">=</span> <span class="bu">list</span>(tvol_by_drug.columns.values)))</span>
+<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a><span class="fu">## Find Outliers</span></span>
+<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a><span class="fu">### Outliers for Tumor Size</span></span>
+<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a>counter <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(tvol_by_drug)):</span>
+<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row, col <span class="kw">in</span> mbr_max_tmpts.iterrows():</span>
+<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col[<span class="st">'Drug'</span>] <span class="op">==</span> tvol_by_drug.index[counter] <span class="kw">and</span> (col[<span class="st">'Tumor Volume (mm3)'</span>] <span class="op">&lt;</span> tvol_by_drug.iloc[counter][<span class="dv">4</span>] <span class="kw">or</span> col[<span class="st">'Tumor Volume (mm3)'</span>] <span class="op">&gt;</span> tvol_by_drug.iloc[counter][<span class="dv">5</span>]):</span>
+<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(row,col[<span class="dv">0</span>], col[<span class="dv">1</span>], col[<span class="st">'Timepoint'</span>], col[<span class="st">'Tumor Volume (mm3)'</span>], tvol_by_drug.iloc[counter][<span class="dv">4</span>],tvol_by_drug.iloc[counter][<span class="dv">5</span>], counter)</span>
+<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a>    counter <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a><span class="fu">### Boxplot for Tumor Size</span></span>
+<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a>Capomulin <span class="op">=</span> mbr_max_tmpts.loc[mbr_max_tmpts[<span class="st">'Drug'</span>] <span class="op">==</span> <span class="st">"Capomulin"</span>]</span>
+<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a>Ceftamin <span class="op">=</span> mbr_max_tmpts.loc[mbr_max_tmpts[<span class="st">'Drug'</span>] <span class="op">==</span> <span class="st">"Ceftamin"</span>]</span>
+<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a>Infubinol <span class="op">=</span> mbr_max_tmpts.loc[mbr_max_tmpts[<span class="st">'Drug'</span>] <span class="op">==</span> <span class="st">"Infubinol"</span>]</span>
+<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a>Ramicane <span class="op">=</span> mbr_max_tmpts.loc[mbr_max_tmpts[<span class="st">'Drug'</span>] <span class="op">==</span> <span class="st">"Ramicane"</span>]</span>
+<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a>Capomulin_tvols <span class="op">=</span> Capomulin[<span class="st">'Tumor Volume (mm3)'</span>]</span>
+<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a>Ceftamin_tvols <span class="op">=</span> Ceftamin[<span class="st">'Tumor Volume (mm3)'</span>]</span>
+<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a>Infubinol_tvols <span class="op">=</span> Infubinol[<span class="st">'Tumor Volume (mm3)'</span>]</span>
+<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a>Ramicane_tvols <span class="op">=</span> Ramicane[<span class="st">'Tumor Volume (mm3)'</span>]</span>
+<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a>columns <span class="op">=</span> [Capomulin_tvols, Ceftamin_tvols, Infubinol_tvols, Ramicane_tvols]</span>
+<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a>fig1, ax1 <span class="op">=</span> plt.subplots()</span>
+<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Tumor Volume at Lastest Timepoint by Top Four Drug Regimens'</span>)</span>
+<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Tumor Volume (mm3)'</span>)</span>
+<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a>ax1.boxplot(columns)</span>
+<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a>plt.xticks([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>], [<span class="st">"Capomulin"</span>, <span class="st">"Ceftamin"</span>, <span class="st">"Infubinol"</span>, <span class="st">"Ramicane"</span>])</span>
+<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a>No outliers detected.</span>
+<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a><span class="fu"># Create a Line Plot and a Scatter Plot</span></span>
+<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a><span class="fu">## Line Plot</span></span>
+<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a>capomulin_results <span class="op">=</span> mouse_results.loc[mouse_results[<span class="st">'Drug'</span>] <span class="op">==</span> <span class="st">"Capomulin"</span>]</span>
+<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a>mouse <span class="op">=</span> pd.unique(capomulin_results[<span class="st">'Mouse ID'</span>])[<span class="dv">0</span>]</span>
+<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a>mouse_data <span class="op">=</span> mouse_results.loc[mouse_results[<span class="st">'Mouse ID'</span>] <span class="op">==</span> mouse]</span>
+<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a>x_axis_data <span class="op">=</span> np.arange(<span class="bu">len</span>(mouse_data))</span>
+<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a>y_axis_data <span class="op">=</span> mouse_data[<span class="st">'Tumor Volume (mm3)'</span>]</span>
+<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a>plt.plot(x_axis_data, y_axis_data, color <span class="op">=</span><span class="st">"#0f2537"</span>)</span>
+<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-254"><a href="#cb10-254" aria-hidden="true" tabindex="-1"></a>tick_locations <span class="op">=</span> [value <span class="cf">for</span> value <span class="kw">in</span> x_axis_data]</span>
+<span id="cb10-255"><a href="#cb10-255" aria-hidden="true" tabindex="-1"></a>plt.xticks(tick_locations,</span>
+<span id="cb10-256"><a href="#cb10-256" aria-hidden="true" tabindex="-1"></a>           mouse_data[<span class="st">'Timepoint'</span>],</span>
+<span id="cb10-257"><a href="#cb10-257" aria-hidden="true" tabindex="-1"></a>           rotation <span class="op">=</span> <span class="dv">45</span>)</span>
+<span id="cb10-258"><a href="#cb10-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-259"><a href="#cb10-259" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Tumor Volume by Timepont for Mouse #</span><span class="sc">{</span>mouse<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb10-260"><a href="#cb10-260" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Timepoint (Days)"</span>)</span>
+<span id="cb10-261"><a href="#cb10-261" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Tumor Volume (mm3)"</span>)</span>
+<span id="cb10-262"><a href="#cb10-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-263"><a href="#cb10-263" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-264"><a href="#cb10-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-265"><a href="#cb10-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-266"><a href="#cb10-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scatter Plot</span></span>
+<span id="cb10-267"><a href="#cb10-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-270"><a href="#cb10-270" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-271"><a href="#cb10-271" aria-hidden="true" tabindex="-1"></a>weight <span class="op">=</span> mbr_max_tmpts[<span class="st">'Weight (g)'</span>]</span>
+<span id="cb10-272"><a href="#cb10-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-273"><a href="#cb10-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-274"><a href="#cb10-274" aria-hidden="true" tabindex="-1"></a>volume <span class="op">=</span> mbr_max_tmpts[<span class="st">'Tumor Volume (mm3)'</span>]</span>
+<span id="cb10-275"><a href="#cb10-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-276"><a href="#cb10-276" aria-hidden="true" tabindex="-1"></a>plt.scatter(weight, volume, marker<span class="op">=</span><span class="st">"o"</span> ,facecolors <span class="op">=</span><span class="st">"#0f2537"</span> , edgecolors<span class="op">=</span><span class="st">"orange"</span>)</span>
+<span id="cb10-277"><a href="#cb10-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-278"><a href="#cb10-278" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Tumor Volume by Weight for Capomulin Regimen'</span>)</span>
+<span id="cb10-279"><a href="#cb10-279" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Weight"</span>)</span>
+<span id="cb10-280"><a href="#cb10-280" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Tumor Volume (mm3)"</span>)</span>
+<span id="cb10-281"><a href="#cb10-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-282"><a href="#cb10-282" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-283"><a href="#cb10-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-284"><a href="#cb10-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-285"><a href="#cb10-285" aria-hidden="true" tabindex="-1"></a><span class="fu"># Calculate Correlation and Regression</span></span>
+<span id="cb10-286"><a href="#cb10-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a><span class="fu">## Correlation</span></span>
+<span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a>correlation <span class="op">=</span> st.pearsonr(weight,volume)</span>
+<span id="cb10-293"><a href="#cb10-293" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The correlation between both factors is </span><span class="sc">{</span><span class="bu">round</span>(correlation[<span class="dv">0</span>],<span class="dv">2</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-294"><a href="#cb10-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-295"><a href="#cb10-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-296"><a href="#cb10-296" aria-hidden="true" tabindex="-1"></a><span class="fu">## Regression</span></span>
+<span id="cb10-297"><a href="#cb10-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-300"><a href="#cb10-300" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb10-301"><a href="#cb10-301" aria-hidden="true" tabindex="-1"></a>(slope, intercept, rvalue, pvalue, stderr) <span class="op">=</span> linregress(weight, volume)</span>
+<span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a>regress_values <span class="op">=</span> weight <span class="op">*</span> slope <span class="op">+</span> intercept</span>
+<span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a>line_eq <span class="op">=</span> <span class="st">"y = "</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">round</span>(slope,<span class="dv">2</span>)) <span class="op">+</span> <span class="st">"x + "</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">round</span>(intercept,<span class="dv">2</span>))</span>
+<span id="cb10-304"><a href="#cb10-304" aria-hidden="true" tabindex="-1"></a>plt.scatter(weight,volume,marker<span class="op">=</span><span class="st">"o"</span>,facecolors <span class="op">=</span><span class="st">"#0f2537"</span> ,edgecolors<span class="op">=</span><span class="st">"orange"</span>)</span>
+<span id="cb10-305"><a href="#cb10-305" aria-hidden="true" tabindex="-1"></a>plt.plot(weight,regress_values,<span class="st">"r-"</span>)</span>
+<span id="cb10-306"><a href="#cb10-306" aria-hidden="true" tabindex="-1"></a>plt.annotate(line_eq,(<span class="fl">5.8</span>,<span class="fl">0.8</span>),fontsize<span class="op">=</span><span class="dv">15</span>,color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb10-307"><a href="#cb10-307" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Tumor Volume by Weight for Capomulin Regimen'</span>)</span>
+<span id="cb10-308"><a href="#cb10-308" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Weight"</span>)</span>
+<span id="cb10-309"><a href="#cb10-309" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Tumor Volume (mm3)"</span>)</span>
+<span id="cb10-310"><a href="#cb10-310" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-311"><a href="#cb10-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>
